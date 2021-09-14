@@ -13,6 +13,10 @@ class TimeoutHandler():
         self.last_logs = []
 
     def getLog(self):
+        if(len(self.last_logs) > 50):
+            self.last_logs = []
+            print("WARNING: This output is too long to display!")
+            return
         for l in self.last_logs:
             print(l)
 
