@@ -1,8 +1,8 @@
-from Singleton import Singleton
+from Utility import Singleton
 import sys, inspect
 
 class UnifiedMessaging:
-    __metaclass__ = Singleton
+    __metaclass__ = Singleton.Singleton
     def __init__(self):
         self._hidden_end = 0
         self.output = []
