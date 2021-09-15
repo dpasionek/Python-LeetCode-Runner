@@ -19,10 +19,10 @@ def main():
         "ohomm": 3,
         "rggtlnpgkqksefchmdaqyhdnatpwbtytbho":11,
         "crdghfrgrgyanjclxgzuomlqxfgeqguuaxdjcuruapwpbzbyhau": 12,
-        #f.read():95
+        f.read():95
     }
     f.close()
-    timeoutHandler = TimeoutHandler.TimeoutHandler(20, sol.lengthOfLongestSubstring)
+    timeoutHandler = TimeoutHandler.TimeoutHandler(10, sol.lengthOfLongestSubstring)
 
     for testCase in testCases:
         now = time.time()
@@ -31,20 +31,26 @@ def main():
             end = time.time()
         except Exception as msg:
             end = time.time()
-            print("The testcase '{0}' Timed Out!\n\tExecution time {1}s".format(testCase, (end-now)))
+            print("The testcase '{0}' Timed Out!\n\tExecution time {1}s".format(testCase if len(testCase) < 50 else testCase[:50] + "...", (end-now)))
             print("Test Output:\n")
-            timeoutHandler.getLog()
+            try:
+                timeoutHandler.getLog(False)
+            except Exception:
+                print("Timeout printing")
             print()
             continue
         
         if(res != testCases[testCase]):
-            print("Test Case: {0} failed.\n\tExecution time {1}s".format(testCase, (end-now)))
+            print("Test Case: {0} failed.\n\tExecution time {1}s".format(testCase if len(testCase) < 50 else testCase[:50] + "...", (end-now)))
             print("\tExpected: {0}  Got: {1}".format(testCases[testCase], res))
             print("\tTest Output:\n")
-            timeoutHandler.getLog()
+            try:
+                timeoutHandler.getLog(False)
+            except Exception:
+                print("Timeout printing")
             print()
         else:
-            print("Test Case: {0} passed!\n\tExecution time {1}s".format(testCase, (end-now)))
+            print("Test Case: {0} passed!\n\tExecution time {1}s".format(testCase if len(testCase) < 50 else testCase[:50] + "...", (end-now)))
             print()
 
 

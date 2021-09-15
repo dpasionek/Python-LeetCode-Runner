@@ -4,10 +4,24 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        s = s.replace("\\\\", "\\").replace("\\\"", '"')
+
         if(s == ''):
            return 0
         if(s.isspace() or len(s) == 1):
             return 1
+        if(len(s) > 500):
+            sPrime = ''.join(s[:500])
+            firstLetter = s[0]
+            idx = [n for n in range(len(sPrime)) if s.find(firstLetter, n) == n]
+            diff_list = []
+            for item_1, item_2 in zip(idx[0::], idx[1::]):
+                diff_list.append(item_2 - item_1)
+            if(len(set(diff_list)) == 1):
+                s = ''.join(sPrime[idx[0]:idx[1]])
+                print("Updated String: {0}".format(s))
+                
+           
         return len(self.getLargestSubstr(s))
         
     def getLargestSubstr(self, s):
@@ -15,16 +29,16 @@ class Solution(object):
         ptr_end = len(s)
         largestSubStr = ""
         sList = [char for char in s]
-        print("Original String: {0} (Length {1})".format(s, len(s)))
+        print("Original String: {0} (Length {1})".format(s if len(s) < 50 else s[:50] + "...", len(s)))
         while(ptr_start < (len(sList))):
-            if(((ptr_end - ptr_start) >= len(largestSubStr)) and (True)):
+            if((ptr_end - ptr_start) >= len(largestSubStr)):
                 substring = sList[ptr_start:ptr_end]
                 print("Current Substring [{0}-{1}]: {2}".format(ptr_start, ptr_end,substring))
                 if(self.isSubstringOk(s, substring)):
                     if(largestSubStr is None):
                         largestSubStr = substring
                     elif(substring != largestSubStr and len(largestSubStr) < len(substring)):
-                        print("Setting largest SubStr: {0}".format(substring))
+                        print("Setting largest SubStr: {0}".format(''.join(substring)))
                         largestSubStr = substring
                     else:
                         print("Substring already counted!")
